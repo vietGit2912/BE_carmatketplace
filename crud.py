@@ -1,11 +1,7 @@
 from sqlalchemy.orm import Session
 
-import models, schemas
-from dataoperation import LambdaFunction
-from sqlalchemy.exc import DontWrapMixin
-
-class MyCustomException(Exception, DontWrapMixin):
-    pass
+import models
+import schemas
 
 # ========CRUD CAR
 def create_dumb(db: Session):
@@ -17,48 +13,68 @@ def create_dumb(db: Session):
         brand_id=1
     )
     car2 = schemas.CarCreate(
-        name="BMW i8",
-        description="BMW here",
-        price=80000,
-        image="https://www.bmw.vn/content/dam/bmw/common/all-models/z-series/roadster/2021/navigation/bmw-zseries-z4-firstedition-modellfinder.png",
+        name="Audi A8",
+        description="Audi A8",
+        price=120000,
+        image="https://giaxeoto.vn/admin/upload/images/resize/640-than-xe-audi-a8-2018-2019.jpg",
         brand_id=2
     )
     car3 = schemas.CarCreate(
-        name="BMW i8",
-        description="BMW here",
+        name="Audi R10",
+        description="Audi R10",
         price=80000,
-        image="https://www.bmw.vn/content/dam/bmw/common/all-models/z-series/roadster/2021/navigation/bmw-zseries-z4-firstedition-modellfinder.png",
+        image="https://img.tinxe.vn/2020/07/07/8EVDUW1z/gia-xe-audi-r8-mau-do-cb85.jpg",
         brand_id=2
     )
     car4 = schemas.CarCreate(
-        name="BMW i8",
+        name="BMW Model 2022",
         description="BMW here",
-        price=80000,
-        image="https://www.bmw.vn/content/dam/bmw/common/all-models/z-series/roadster/2021/navigation/bmw-zseries-z4-firstedition-modellfinder.png",
+        price=75000,
+        image="https://imgd.aeplcdn.com/0x0/n/cw/ec/41406/bmw-8-series-right-front-three-quarter8.jpeg",
         brand_id=1
     )
     car5 = schemas.CarCreate(
-        name="BMW i8",
+        name="Lexus RX",
         description="BMW here",
-        price=80000,
-        image="https://www.bmw.vn/content/dam/bmw/common/all-models/z-series/roadster/2021/navigation/bmw-zseries-z4-firstedition-modellfinder.png",
-        brand_id=2
+        price=120000,
+        image="https://media.vov.vn/sites/default/files/styles/large/public/2022-06/2023-lexus-rx-10.jpg",
+        brand_id=6
     )
     car6 = schemas.CarCreate(
-        name="BMW i8",
-        description="BMW here",
+        name="Postche SC123",
+        description="Postche Brand",
         price=80000,
-        image="https://www.bmw.vn/content/dam/bmw/common/all-models/z-series/roadster/2021/navigation/bmw-zseries-z4"
-              "-firstedition-modellfinder.png",
-        brand_id=2
+        image="https://cars.usnews.com/static/images/Auto/izmo/i159615142/2023_porsche_macan_angularfront.jpg",
+        brand_id=7
     )
     car7 = schemas.CarCreate(
-        name="BMW i8",
-        description="BMW here",
-        price=80000,
-        image="https://www.bmw.vn/content/dam/bmw/common/all-models/z-series/roadster/2021/navigation/bmw-zseries-z4"
-              "-firstedition-modellfinder.png",
-        brand_id=1
+        name="Lamborghini Avendator LP780",
+        description="Lamborghini Avendator LP780",
+        price=200000,
+        image="https://vcdn1-vnexpress.vnecdn.net/2021/07/07/Aventador-Ultimae-Coupe-1-3961-1625659942.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=-bQfhP52fmZis8gCgeHLoQ",
+        brand_id=4
+    )
+    car8 = schemas.CarCreate(
+        name="Lamborghini SC18",
+        description="Lamborghini SC18",
+        price=200000,
+        image="https://cms-i.autodaily.vn/du-lieu/2018/11/18/lamborghini-sc18-7.jpg",
+        brand_id=4
+    )
+    car9 = schemas.CarCreate(
+        name="Lamborghini Spec",
+        description="Lamborghini Spec",
+        price=240000,
+        image="https://m.atcdn.co.uk/vms/media/4c06bec9fcd34fc89102eee8f4128dc6.jpg",
+        brand_id=4
+    )
+
+    car10 = schemas.CarCreate(
+        name="Mazda",
+        description="Mazda",
+        price=70000,
+        image="https://mazdamotors.vn/media/z3cfgn1a/1.jpg",
+        brand_id=3
     )
 
     db_car = models.Car(**car1.dict())
@@ -75,6 +91,13 @@ def create_dumb(db: Session):
     db.add(db_car)
     db_car = models.Car(**car7.dict())
     db.add(db_car)
+    db_car = models.Car(**car8.dict())
+    db.add(db_car)
+    db_car = models.Car(**car9.dict())
+    db.add(db_car)
+    db_car = models.Car(**car10.dict())
+    db.add(db_car)
+
     db.commit()
 
 
@@ -87,7 +110,7 @@ def create_dumb_brand(db: Session):
     brand2 = schemas.BrandCreate(
         name="Audi",
         description="Audi Brand",
-        logo="https://vudigital.co/wp-content/uploads/2021/09/logo-audi-bieu-tuong-thuong-hieu-xe-hoi-thay-doi-nhieu-nhat-ke-tu-1909-12.jpg"
+        logo="https://www.pikpng.com/pngl/m/17-173029_audi-logo-png-transparent-svg-vector-freebie-supply.png"
     )
     brand3 = schemas.BrandCreate(
         name="Mazda",
@@ -109,6 +132,11 @@ def create_dumb_brand(db: Session):
         description="Lexus Brand",
         logo="https://1000logos.net/wp-content/uploads/2021/04/Lexus-Logo.png"
     )
+    brand7 = schemas.BrandCreate(
+        name="Porsche",
+        description="Porsche Brand",
+        logo="https://png.monster/wp-content/uploads/2022/02/png.monster-758-370x370.png"
+    )
 
     db_brand = models.Brand(**brand1.dict())
     db.add(db_brand)
@@ -126,6 +154,9 @@ def create_dumb_brand(db: Session):
     db.add(db_brand)
 
     db_brand = models.Brand(**brand6.dict())
+    db.add(db_brand)
+
+    db_brand = models.Brand(**brand7.dict())
     db.add(db_brand)
 
     db.commit()
@@ -163,14 +194,21 @@ def delete_car(db: Session, car: schemas.CarCreate):
     db.commit()
 
 
+def delete_all_car(db: Session):
+    db.query(models.Car).delete()
+    db.commit()
+
+
 def get_cars_by_brand(db: Session, brand_name: str):
-    return db.query(models.Car).filter(models.Car.brand_name == brand_name).all()
+    db_brand = db.query(models.Brand).filter(models.Brand.name == brand_name).first()
+    brand_id = db_brand.id
+    return db.query(models.Car).filter(models.Car.brand_id == brand_id).all()
 
 
-def search_cars_by_keyword(db: Session, keyword: str):
-    rs = LambdaFunction.search_by_price_contain()
-    rs(keyword)
-    return db.query(models.Car).filter(rs(keyword)).all()
+def get_cars_by_keyword(db: Session, brand_name: str, keyword: str):
+    db_brand = db.query(models.Brand).filter(models.Brand.name == brand_name).first()
+    brand_id = db_brand.id
+    return db.query(models.Car).filter(models.Car.brand_id == brand_id, models.Car.name.contains(keyword)).all()
 
 
 # =======BRAND
@@ -180,6 +218,10 @@ def get_brands(db: Session):
 
 def get_brand(db: Session, brand_name: str):
     return db.query(models.Brand).filter(models.Brand.name == brand_name).first()
+
+
+def get_brand_by_id(db: Session, brand_id: int):
+    return db.query(models.Brand).filter(models.Brand.id == brand_id).first()
 
 
 def is_brand_exist(db: Session, brand_name: str):
@@ -208,11 +250,10 @@ def delete_all_brand(db: Session):
     db.commit()
 
 
-def delete_brand(db: Session, brand_id: int):
+def delete_brand_by_id(db: Session, brand_id: int):
     try:
-        db_brand = get_brand(db, brand_id)
+        db_brand = get_brand_by_id(db, brand_id)
         db.delete(db_brand)
         db.commit()
-        print("done delete car")
     except:
         db.rollback()

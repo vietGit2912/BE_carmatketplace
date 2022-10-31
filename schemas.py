@@ -11,8 +11,7 @@ class CarBase(BaseModel):
 
 class CarCreate(CarBase):
     brand_id:  Optional[str]
-
-    pass
+    # pass
 
 
 class Car(CarBase):
@@ -28,8 +27,8 @@ class BrandBase(BaseModel):
     logo: str
     description: str | None = None
 
-    class Config:
-        orm_mode = True
+    # class Config:
+    #     orm_mode = True
 
 
 class BrandCreate(BrandBase):
@@ -38,7 +37,6 @@ class BrandCreate(BrandBase):
 
 class Brand(BrandBase):
     id: int
-    cars: list[Car] = []
 
     class Config:
         orm_mode = True

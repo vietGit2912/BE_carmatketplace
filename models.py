@@ -15,9 +15,6 @@ class Brand(Base):
     logo = Column(String)
     description = Column(String)
 
-    cars = relationship("Car", back_populates="brand")
-
-
 class Car(Base):
     __tablename__ = "cars"
 
@@ -28,7 +25,6 @@ class Car(Base):
     image = Column(String, index=True)
 
     brand_id = Column(Integer, ForeignKey("brands.id"))
-    brand = relationship("Brand", back_populates="cars")
 
 
 

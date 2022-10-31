@@ -31,7 +31,6 @@ def get_db():
     finally:
         db.close()
 
-
 # -========================BRAND
 # CREATE BRAND
 @app.post("/brand", status_code=status.HTTP_201_CREATED)
@@ -60,7 +59,7 @@ def get_brand_detail(brand_name: str, db: Session = Depends(get_db)):
 # UPDATE BRAND
 @app.patch("/brand/{brand_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_brand(brand_id: str, brand: schemas.BrandCreate, db: Session = Depends(get_db)):
-    db_brand = crud.get_brand(db, brand_id)
+    db_brand = crud.get_brand_by_id(db, brand_id)
     if db_brand is None:
         raise HTTPException(status_code=404, detail="Brand not found")
 
@@ -72,15 +71,15 @@ async def update_brand(brand_id: str, brand: schemas.BrandCreate, db: Session = 
 
 
 # DELETE ALL BRAND
-@app.delete("/delete_brands", status_code=status.HTTP_204_NO_CONTENT)
-def delete_brands(db: Session = Depends(get_db)):
+@app.delete("/delete_all_brand", status_code=status.HTTP_204_NO_CONTENT)
+def delete_all_brand(db: Session = Depends(get_db)):
     crud.delete_all_brand(db)
 
 
 # DELETE BRAND
 @app.delete("/brand/{brand_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_brand(brand_id: int, db: Session = Depends(get_db)):
-    crud.delete_brand(db, brand_id)
+    crud.delete_brand_by_id(db, brand_id)
 
 
 # -========================CAR
@@ -138,6 +137,11 @@ def update_car(car_id: str, car: schemas.CarCreate, db: Session = Depends(get_db
 
 
 # DELETE CAR
+@app.delete("/delete_all_car", status_code=status.HTTP_204_NO_CONTENT)
+def delete_all_car(db: Session = Depends(get_db)):
+    crud.delete_all_car(db)
+
+
 @app.delete("/car/{car_id}")
 def delete_car(car_id: int, db: Session = Depends(get_db)):
     car = crud.get_car(db, car_id)
@@ -153,8 +157,7 @@ def get_all_car_by_brand(brand_name: str, db: Session = Depends(get_db)):
     return crud.get_cars_by_brand(db, brand_name)
 
 
-# SEARCH CAR BY KEYWORD
-
-@app.get("/searchcar/{keyword}", response_model=list[schemas.Car])
-def search_cars_by_keyword(keyword: str, db: Session = Depends(get_db)):
-    return crud.search_cars_by_keyword(db, keyword)
+@app.get("/{brand_name}/{search}", response_model=list[schemas.Car])
+async def get_car_by_contained_keyword(keyword: str, brand_name: str , db: Session = Depends(get_db)):
+    db_cars = crud.get_cars_by_keyword(db, brand_name, keyword)
+    return db_cars
